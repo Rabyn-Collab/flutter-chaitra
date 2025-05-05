@@ -53,11 +53,7 @@ class DetailPage extends StatelessWidget {
                           ),
                           onPressed: (){}, child: Text('Read Book')),
                       SizedBox(width: 20,),
-                      OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-
-                          ),
-                          onPressed: (){}, child: Text('More Info'))
+                      OutlinedButton(onPressed: (){}, child: Text('More Info'))
                     ],
                   )
                 ],
