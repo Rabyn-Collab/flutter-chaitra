@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chaitra/pages/widgets/comment_widget.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -7,40 +6,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-      title: Text('Refactor'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView(
-          children: [
-
-
-
-          CommentWidget(
-            imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww',
-            comment: 'faboulous post great',
-            user: 'Antonio Gonzalous',
-          ),
-
-            CommentWidget(
-              imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww',
-              comment: 'it\'s been a while',
-              user: 'Joh DOe',
-            ),
-
-
-
-
-
-
-
-          ],
-        ),
-      ),
-    );
+    return const Placeholder();
   }
-
-
 }
