@@ -1,3 +1,4 @@
+import 'package:flutter_chaitra/pages/about_page.dart';
 import 'package:flutter_chaitra/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +12,12 @@ final router = GoRouter(
         builder: (context, state){
             return HomePage();
         }
+      ),
+      GoRoute(
+          path: '/about',
+          builder: (context, state){
+            return AboutPage();
+          }
       )
     ]
 );

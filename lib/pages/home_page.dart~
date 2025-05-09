@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chaitra/pages/widgets/comment_widget.dart';
+import 'package:flutter_chaitra/providers/provider.dart';
+import 'package:flutter_chaitra/providers/some_class.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -7,40 +9,44 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-      title: Text('Refactor'),
+        title: const Text('Home'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: ListView(
+        child: Column(
           children: [
-
-
-
-          CommentWidget(
-            imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww',
-            comment: 'faboulous post great',
-            user: 'Antonio Gonzalous',
-          ),
-
-            CommentWidget(
-              imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVyc29ufGVufDB8fDB8fHww',
-              comment: 'it\'s been a while',
-              user: 'Joh DOe',
+            Text('hello jee'),
+            ElevatedButton(onPressed: (){}, child: Text('Click')),
+            Consumer(
+              builder: (context, ref, child) {
+                final some = ref.watch(someProvider);
+                final some1 = ref.watch(someProvider1);
+                final some2 = ref.watch(someProvider2);
+                final some3 = ref.watch(someProvider3);
+                return Column(
+                  children: [
+                    TextButton(
+                      onPressed: (){
+                        some.someMethod();
+                      },
+                      child: Text(some.someText),
+                    ),
+                    Text(some1),
+                    Text('$some2'),
+                    Column(
+                      children: some3.map((e) => Text(e)).toList(),
+                    )
+                  ],
+                );
+              }
             ),
-
-
-
-
-
-
-
+            ElevatedButton(onPressed: (){}, child: Text('Go To About Page'))
           ],
         ),
       ),
     );
   }
-
-
 }
