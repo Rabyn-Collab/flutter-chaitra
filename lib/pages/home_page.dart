@@ -1,52 +1,38 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chaitra/providers/provider.dart';
-import 'package:flutter_chaitra/providers/some_class.dart';
+import 'package:flutter_chaitra/providers/notifier_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, ref) {
+    final users = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text('Notifier Provider'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('hello jee'),
-            ElevatedButton(onPressed: (){}, child: Text('Click')),
-            Consumer(
-              builder: (context, ref, child) {
-                final some = ref.watch(someProvider);
-                final some1 = ref.watch(someProvider1);
-                final some2 = ref.watch(someProvider2);
-                final some3 = ref.watch(someProvider3);
-                return Column(
-                  children: [
-                    TextButton(
-                      onPressed: (){
-                        some.someMethod();
-                      },
-                      child: Text(some.someText),
-                    ),
-                    Text(some1),
-                    Text('$some2'),
-                    Column(
-                      children: some3.map((e) => Text(e)).toList(),
-                    )
-                  ],
-                );
-              }
-            ),
             ElevatedButton(onPressed: (){
-              context.push('/about');
-            }, child: Text('Go To About Page'))
+              ref.read(userProvider.notifier).addUser(faker.internet.userName());
+            }, child: Text('Add User')),
+            Expanded(
+                child: ListView.builder(
+                  itemCount: users.length,
+                    itemBuilder: (context, index){
+                    final user = users[index];
+                    return  ListTile(
+                      title: Text(user),
+                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                    );
+                    }
+                )
+            )
           ],
         ),
       ),
