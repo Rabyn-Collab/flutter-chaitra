@@ -24,6 +24,25 @@ class UserProvider extends Notifier<List<String>>{
     state = [...state, user];
   }
 
+  void removeUser(String user){
+    state = state.where((element) => element != user).toList();
+  }
+
 }
 
 final userProvider = NotifierProvider<UserProvider, List<String>>(() => UserProvider());
+
+
+
+class ThemeProvider extends Notifier<bool>{
+  @override
+  bool build() {
+    return false;
+  }
+  void changeTheme(){
+    state = !state;
+  }
+
+}
+
+final themeProvider = NotifierProvider<ThemeProvider, bool>(() => ThemeProvider());

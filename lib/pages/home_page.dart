@@ -1,41 +1,26 @@
-import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chaitra/providers/notifier_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
+import 'package:go_router/go_router.dart';
 
-class HomePage extends ConsumerWidget {
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
-    final users = ref.watch(userProvider);
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifier Provider'),
+        title: const Text('Home'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.input),
+            onPressed: () {
+              context.pushNamed(AppRoute.form.name);
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ElevatedButton(onPressed: (){
-              ref.read(userProvider.notifier).addUser(faker.internet.userName());
-            }, child: Text('Add User')),
-            Expanded(
-                child: ListView.builder(
-                  itemCount: users.length,
-                    itemBuilder: (context, index){
-                    final user = users[index];
-                    return  ListTile(
-                      title: Text(user),
-                      trailing: IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
-                    );
-                    }
-                )
-            )
-          ],
-        ),
-      ),
+      body: Container(),
     );
   }
 }
