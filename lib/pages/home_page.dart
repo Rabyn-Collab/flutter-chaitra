@@ -10,8 +10,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-     final fm = ref.watch(userDetailProvider);
-     print(fm);
+     final users = ref.watch(userDetailProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -24,7 +24,83 @@ class HomePage extends ConsumerWidget {
           ),
         ],
       ),
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: users.isEmpty ? const Center(child: Text('Try To add Users'),) : ListView.separated(
+            itemBuilder: (context, index){
+              final user = users[index];
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.person),
+                              SizedBox(width: 10,),
+                              Text(user.username),
+                            ],
+                          ),
+                          Spacer(),
+                          Row(
+                            children: [
+                              IconButton(onPressed: (){
+                                context.pushNamed(AppRoute.form.name, extra: user);
+                              }, icon: Icon(Icons.edit)),
+                              IconButton(onPressed: (){
+                                ref.read(userDetailProvider.notifier).removeUserDetail(user.id);
+                              }, icon: Icon(Icons.delete)),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Icon(Icons.phone),
+                          SizedBox(width: 10,),
+                          Text(user.phone),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Icon(user.gender == 'male' ?Icons.man: Icons.woman),
+                          SizedBox(width: 10,),
+                          Text(user.gender),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Icon(Icons.email),
+                          SizedBox(width: 10,),
+                          Text(user.email),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        children: [
+                          Icon(Icons.flag),
+                          SizedBox(width: 10,),
+                          Text(user.country),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index){
+              return Divider();
+            },
+            itemCount: users.length
+        ),
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter_chaitra/models/user.dart';
 import 'package:flutter_chaitra/pages/about_page.dart';
 import 'package:flutter_chaitra/pages/form_page.dart';
 import 'package:flutter_chaitra/pages/home_page.dart';
@@ -25,7 +26,7 @@ final router = GoRouter(
           path: '/form-page',
           name: AppRoute.form.name,
           builder: (context, state){
-            return FormPage();
+            return FormPage( user: state.extra as User?,);
           }
       )
     ]

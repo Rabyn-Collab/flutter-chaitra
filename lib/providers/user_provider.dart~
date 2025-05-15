@@ -22,10 +22,6 @@ final uuid = Uuid();
     ];
   }
 
-  void removeUserDetail(String id) {
-    state = state.where((user) => user.id != id).toList();
-  }
-
 }
 
 

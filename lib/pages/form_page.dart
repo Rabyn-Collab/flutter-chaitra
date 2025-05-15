@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_chaitra/models/user.dart';
 import 'package:flutter_chaitra/providers/autovalidate_provider.dart';
 import 'package:flutter_chaitra/providers/user_provider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -9,7 +10,8 @@ import 'package:go_router/go_router.dart';
 
 
 class FormPage extends ConsumerStatefulWidget {
-  const FormPage({super.key});
+  final User? user;
+  const FormPage({super.key, this.user});
 
   @override
   ConsumerState<FormPage> createState() => _FormPageState();
@@ -20,6 +22,7 @@ class _FormPageState extends ConsumerState<FormPage> {
   @override
   Widget build(BuildContext context) {
     final mode = ref.watch(autoValidateModeProvider);
+    print(widget.user);
     return Scaffold(
       appBar: AppBar(
         title: Text('Form Widgets'),
@@ -33,6 +36,7 @@ class _FormPageState extends ConsumerState<FormPage> {
               children: [
                 FormBuilderTextField(
                     name: 'username',
+                  initialValue: widget.user?.username,
                   decoration: InputDecoration(
                     hintText: 'Username',
                     contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -53,6 +57,7 @@ class _FormPageState extends ConsumerState<FormPage> {
                     LengthLimitingTextInputFormatter(10)
                   ],
                   name: 'phone',
+                  initialValue: widget.user?.phone,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       hintText: 'phone',
@@ -67,6 +72,7 @@ class _FormPageState extends ConsumerState<FormPage> {
                 SizedBox(height: 16,),
                 FormBuilderTextField(
                   name: 'email',
+                  initialValue: widget.user?.email,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       hintText: 'email',
@@ -82,6 +88,7 @@ class _FormPageState extends ConsumerState<FormPage> {
                 SizedBox(height: 16,),
 
                 FormBuilderRadioGroup(
+                  initialValue: widget.user?.gender,
                   name: 'gender',
                   options: [
                     FormBuilderFieldOption(value: 'male', child: Text('Male')),
@@ -96,6 +103,7 @@ class _FormPageState extends ConsumerState<FormPage> {
                 
                 FormBuilderDropdown(
                     name: 'country',
+                    initialValue: widget.user?.country,
                     hint: Text('Select Country'),
                     items: [
                       DropdownMenuItem(
@@ -122,7 +130,13 @@ class _FormPageState extends ConsumerState<FormPage> {
                 ElevatedButton(onPressed: (){
 
                   if(_formKey.currentState!.saveAndValidate(focusOnInvalid: false)){
-                   ref.read(userDetailProvider.notifier).addUserDetail(_formKey.currentState!.value);
+                    final map = _formKey.currentState!.value;
+                    if(widget.user == null){
+                      ref.read(userDetailProvider.notifier).addUserDetail(map);
+                    }else{
+                      ref.read(userDetailProvider.notifier).updateUserDetail({...map, 'id': widget.user!.id});
+                    }
+
                    context.pop();
                   }else{
                     ref.read(autoValidateModeProvider.notifier).change();
