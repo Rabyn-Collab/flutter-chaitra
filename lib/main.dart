@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/providers/notifier_provider.dart';
 import 'package:flutter_chaitra/routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 
@@ -10,17 +11,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// provider, notifier_provider, future_provider, async_notifier_provider, stream_provider
 
 
+final boxProvider = Provider<List>( (ref) => []);
 
-void main (){
+
+void main () async{
   //  List<int> state = [1,2,3,4,5,6];
   // //  state = state.where((element) => element != 1).toList();
   //
   //  final m = state.where((n) => n !=3).toList();
   //
   //  print(m);
-
-  runApp(ProviderScope(child: Main()));
+  await Hive.initFlutter();
+  final box = await Hive.openBox('box');
+  final users = box.get('user') ?? [];
+  runApp(ProviderScope(
+      overrides: [
+        boxProvider.overrideWithValue(users)
+      ],
+      child: Main()));
 }
+
+
 
 
 class Main extends ConsumerWidget {
