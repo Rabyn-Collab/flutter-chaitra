@@ -1,5 +1,7 @@
+import 'package:flutter_chaitra/main.dart';
 import 'package:flutter_chaitra/models/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -7,19 +9,27 @@ import 'package:uuid/uuid.dart';
 class UserDetailProvider extends Notifier<List<User>>{
   @override
   List<User> build() {
-     return [];
+     return ref.watch(boxProvider);
   }
 final uuid = Uuid();
+  final box = Hive.box<User>('box');
 
   void addUserDetail(Map<String, dynamic> user) {
-    state = [...state, User.fromJson({...user, 'id': uuid.v4()})];
+    final newUser = User.fromJson({...user, 'id': uuid.v4()});
+    state = [...state, newUser];
+    box.add(newUser);
   }
 
 
   void updateUserDetail(Map<String, dynamic> updateUser) {
-    state = [
-     for(final user in state) user.id ==  updateUser['id'] ? User.fromJson(updateUser): user
-    ];
+    final updateNewUser = User.fromJson(updateUser);
+    final existUser = state.firstWhere((user) => user.id == updateNewUser.id);
+    existUser.username = updateNewUser.username;
+    existUser.email = updateNewUser.email;
+    existUser.phone = updateNewUser.phone;
+    existUser.gender = updateNewUser.gender;
+    existUser.country = updateNewUser.country;
+    existUser.save();
   }
 
   void removeUserDetail(String id) {
