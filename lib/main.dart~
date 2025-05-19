@@ -12,13 +12,9 @@ final boxProvider = Provider<List<User>>((ref) => []);
 /// provider, notifier_provider, future_provider, async_notifier_provider, stream_provider
 
 void main () async{
-  //  List<int> state = [1,2,3,4,5,6];
-  // //  state = state.where((element) => element != 1).toList();
-  //
-  //  final m = state.where((n) => n !=3).toList();
-  //
-  //  print(m);
+
   await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
   final hiveBox = await Hive.openBox<User>('box');
 
   runApp(ProviderScope(

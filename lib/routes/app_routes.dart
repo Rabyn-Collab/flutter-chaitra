@@ -1,8 +1,4 @@
-import 'package:flutter_chaitra/models/user.dart';
-import 'package:flutter_chaitra/pages/about_page.dart';
-import 'package:flutter_chaitra/pages/form_page.dart';
 import 'package:flutter_chaitra/pages/home_page.dart';
-import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -16,18 +12,6 @@ final router = GoRouter(
             return HomePage();
         }
       ),
-      GoRoute(
-          path: '/about',
-          builder: (context, state){
-            return AboutPage();
-          }
-      ),
-      GoRoute(
-          path: '/form-page',
-          name: AppRoute.form.name,
-          builder: (context, state){
-            return FormPage( user: state.extra as User?,);
-          }
-      )
+
     ]
 );
