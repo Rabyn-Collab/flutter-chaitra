@@ -51,7 +51,7 @@ class HomePage extends ConsumerWidget {
                                 context.pushNamed(AppRoute.form.name, extra: user);
                               }, icon: Icon(Icons.edit)),
                               IconButton(onPressed: (){
-                                ref.read(userDetailProvider.notifier).removeUserDetail(user.id);
+                                ref.read(userDetailProvider.notifier).removeUserDetail(user);
                               }, icon: Icon(Icons.delete)),
                             ],
                           )

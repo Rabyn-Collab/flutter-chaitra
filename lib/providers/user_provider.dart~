@@ -25,11 +25,15 @@ final uuid = Uuid();
     final updateNewUser = User.fromJson(updateUser);
     final existUser = state.firstWhere((user) => user.id == updateNewUser.id);
     existUser.username = updateNewUser.username;
+    existUser.email = updateNewUser.email;
+    existUser.phone = updateNewUser.phone;
+    existUser.gender = updateNewUser.gender;
+    existUser.country = updateNewUser.country;
     existUser.save();
   }
 
-  void removeUserDetail(String id) {
-    state = state.where((user) => user.id != id).toList();
+  void removeUserDetail(User user) {
+    user.delete();
   }
 
 }

@@ -32,8 +32,9 @@ final uuid = Uuid();
     existUser.save();
   }
 
-  void removeUserDetail(String id) {
-    state = state.where((user) => user.id != id).toList();
+  void removeUserDetail(User user) {
+    state = state.where((e) => e.id != user.id).toList();
+    user.delete();
   }
 
 }
