@@ -6,14 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// provider, notifier_provider, future_provider, async_notifier_provider, stream_provider
 
-void main () async{
 
 
+
+
+void main ()async {
 
   runApp(ProviderScope(
-      overrides: [
-
-      ],
+      overrides: [],
       child: Main()));
 }
 
