@@ -6,13 +6,13 @@ import 'package:flutter_chaitra/models/category.dart';
 
 class MealRepository {
 
- final Dio dio = Dio();
+static  final Dio dio = Dio();
 
-  Future  getMealCategory() async {
+ static Future<List<CategoryData>>  getMealCategory() async {
     try{
 
      final response =  await dio.get('https://www.themealdb.com/api/json/v1/1/categories.php');
-     (response.data['categories'] as List).map((e) => CategoryData.fromJson(e)).toList();
+    return  (response.data['categories'] as List).map((e) => CategoryData.fromJson(e)).toList();
     }catch (err){
       print(err);
       throw 'something went wrong';
