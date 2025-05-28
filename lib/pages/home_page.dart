@@ -1,48 +1,38 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chaitra/pages/widgets/category_item.dart';
-import 'package:flutter_chaitra/providers/meal_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends ConsumerWidget {
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
-    final categoryState = ref.watch(mealCategoryProvider);
-    return Scaffold(
-        body: categoryState.when(
-          data: (data){
-            return DefaultTabController(
-              length: data.length,
-              child: CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    bottom: TabBar(
-                        isScrollable: true,
-                        tabAlignment: TabAlignment.start,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        tabs: data.map((category){
-                          return Tab(text: category.strCategory,);
-                        }).toList()
-                    ),
-                  ),
-                  SliverFillRemaining(
-                      child: TabBarView(
-                        children: data.map((category){
-                          return CategoryItemPage(category: category.strCategory,);
-                        }).toList(),
-                      )
-                  )
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 5,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('News App'),
+          actions: [
+            IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search)),
+          ],
+          bottom: TabBar(
+            isScrollable: true,
+              tabAlignment: TabAlignment.start,
+              indicatorSize: TabBarIndicatorSize.label,
+              tabs: [
+            Tab(text: 'Hollywood',),
+            Tab(text: 'Fashion',),
+            Tab(text: 'Science',),
+            Tab(text: 'Politics',),
+            Tab(text: 'Education',),
+          ]),
+        ),
+        body: TabBarView(
+            children: [
 
-                ],
-              ),
-            );
-          },
-          error: (err, st){
-            return Text(err.toString());
-          },
-          loading: () => const Center(child: CircularProgressIndicator(),
-          ),
-        ));
+            ]
+        ),
+      ),
+    );
   }
 }
