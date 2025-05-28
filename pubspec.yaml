@@ -44,6 +44,11 @@ dependencies:
   hive_flutter: ^1.1.0
   dio: ^5.8.0+1
 
+  new_pod_player:
+    git:
+      url: https://github.com/Rabyn-Collab/new_pod_player.git
+      path: packages/new_pod_player
+
 
 dev_dependencies:
   flutter_test:
