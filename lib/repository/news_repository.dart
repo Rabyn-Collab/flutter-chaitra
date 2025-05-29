@@ -15,6 +15,7 @@ class NewsRepository {
       return  response.data['articles'].map<News>((e) => News.fromJson(e)).toList();
 
     }catch(err){
+      print(err);
       throw 'Something went wrong';
     }
   }

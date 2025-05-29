@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chaitra/pages/widgets/category_news.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -29,7 +30,11 @@ class HomePage extends StatelessWidget {
         ),
         body: TabBarView(
             children: [
-
+              CategoryNews(category: 'Hollywood',),
+              CategoryNews(category: 'Fashion',),
+              CategoryNews(category: 'Science',),
+              CategoryNews(category: 'Politics',),
+              CategoryNews(category: 'Education',),
             ]
         ),
       ),
