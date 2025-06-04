@@ -20,6 +20,21 @@ class NewsRepository {
     }
   }
 
+  static  Future<List<News>> getSearchNews(String search) async {
+    try{
+
+      final response =await dio.get('https://newsapi.org/v2/everything', queryParameters: {
+        'q': search,
+        'apiKey': '6755b948d1064281a661e72a262ccc2d'
+      });
+      return  response.data['articles'].map<News>((e) => News.fromJson(e)).toList();
+
+    }catch(err){
+      print(err);
+      throw 'Something went wrong';
+    }
+  }
+
 
 
 }

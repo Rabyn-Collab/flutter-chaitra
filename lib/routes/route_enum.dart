@@ -4,5 +4,6 @@
 
 enum AppRoute {
   home,
-  webView
+  webView,
+  search
 }

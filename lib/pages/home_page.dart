@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/pages/widgets/category_news.dart';
+import 'package:flutter_chaitra/pages/widgets/search_input.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
+import 'package:go_router/go_router.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -12,10 +15,19 @@ class HomePage extends StatelessWidget {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('News App'),
-          actions: [
-            IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search)),
-          ],
+          toolbarHeight: 100,
+
+          flexibleSpace: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text('News App', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+              ),
+              SearchInput(),
+            ],
+          ),
           bottom: TabBar(
             isScrollable: true,
               tabAlignment: TabAlignment.start,

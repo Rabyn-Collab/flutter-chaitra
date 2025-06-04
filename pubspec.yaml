@@ -44,9 +44,9 @@ dependencies:
   hive_flutter: ^1.1.0
   dio: ^5.8.0+1
   cached_network_image: ^3.4.1
-  skeletonizer: ^1.4.3
+  skeletonizer: ^2.0.1
   flutter_inappwebview: ^6.1.5
-
+  dynamic_height_grid_view: ^0.0.4
   new_pod_player:
     git:
       url: https://github.com/Rabyn-Collab/new_pod_player.git
