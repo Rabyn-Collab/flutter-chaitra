@@ -47,6 +47,10 @@ dependencies:
   skeletonizer: ^2.0.1
   flutter_inappwebview: ^6.1.5
   dynamic_height_grid_view: ^0.0.4
+  freezed_annotation: ^2.4.4
+  riverpod_annotation: ^2.6.1
+
+
   new_pod_player:
     git:
       url: https://github.com/Rabyn-Collab/new_pod_player.git
@@ -66,6 +70,9 @@ dev_dependencies:
   flutter_launcher_icons: "^0.14.3"
   build_runner: ^2.4.15
   hive_generator: ^2.0.1
+  freezed: ^2.5.7
+  riverpod_generator: ^2.6.3
+  json_serializable: ^6.9.0
 
 flutter_launcher_icons:
   android: "launcher_icon"
