@@ -13,6 +13,9 @@ class Blog with _$Blog {
    }) = _Blog;
 
   factory Blog.fromJson(Map<String, dynamic> json) => _$BlogFromJson(json);
+  factory Blog.empty(){
+    return Blog(id: '0', title: 'asldkj sajkdnsa', detail: 'sald;k aslkdnaslkdsa lknasdsal');
+  }
 }
 
 

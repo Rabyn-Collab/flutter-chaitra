@@ -13,9 +13,13 @@ class BlogController extends _$BlogController {
    return ref.read(blogRepositoryProvider).getBlogs();
   }
 
-  void reload() async {
-    state = const AsyncLoading();
-    await Future.delayed(const Duration(seconds: 2));
-    state = AsyncError('something went wrong', StackTrace.current);
+  Future<void> addBlog(Map<String, dynamic> json) async {
+    // print(state.valueOrNull);
+      state = const AsyncLoading();
+   state  = await AsyncValue.guard(() async{
+     final blog = await ref.read(blogRepositoryProvider).addBlog(json);
+     return [...state.valueOrNull ?? [], blog];
+   });
+
   }
 }

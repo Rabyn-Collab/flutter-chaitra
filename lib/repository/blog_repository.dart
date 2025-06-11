@@ -20,6 +20,15 @@ class BlogRepository {
         throw '${err.response}';
       }
   }
+
+  Future<Blog> addBlog(Map<String, dynamic> json) async {
+    try{
+     final response =  await _client.post('/blogs', data: json);
+     return Blog.fromJson(response.data);
+    }on DioException catch(err){
+      throw '${err.response}';
+    }
+  }
   
 }
 
