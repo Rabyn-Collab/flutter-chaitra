@@ -14,12 +14,20 @@ class BlogController extends _$BlogController {
   }
 
   Future<void> addBlog(Map<String, dynamic> json) async {
-    // print(state.valueOrNull);
       state = const AsyncLoading();
    state  = await AsyncValue.guard(() async{
      final blog = await ref.read(blogRepositoryProvider).addBlog(json);
      return [...state.valueOrNull ?? [], blog];
    });
 
+  }
+
+
+  Future<void> removeBlog(String id) async {
+      state = const AsyncLoading();
+   state  = await AsyncValue.guard(() async{
+     await ref.read(blogRepositoryProvider).removeBlog(id);
+     return state.valueOrNull!.where((element) => element.id != id).toList();
+   });
   }
 }

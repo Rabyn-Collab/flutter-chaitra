@@ -29,6 +29,14 @@ class BlogRepository {
       throw '${err.response}';
     }
   }
+
+  Future<void> removeBlog(String id) async {
+    try{
+       await _client.delete('/blogs/$id');
+    }on DioException catch(err){
+      throw '${err.response}';
+    }
+  }
   
 }
 

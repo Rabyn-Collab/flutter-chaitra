@@ -3,6 +3,7 @@ import 'package:flutter_chaitra/models/blog.dart';
 import 'package:flutter_chaitra/pages/widgets/add_form.dart';
 import 'package:flutter_chaitra/providers/blog_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends ConsumerWidget {
@@ -37,14 +38,15 @@ class HomePage extends ConsumerWidget {
           await ref.refresh(blogControllerProvider.future);
         },
         child: blogsState.when(
-          //skipLoadingOnRefresh: false,
+          skipError: true,
+          skipLoadingOnReload: true,
           data: (data) {
             return _buildListView(data);
           },
           error: (err, st) {
             return Text('$err');
           },
-          loading: () => Skeletonizer(child: _buildListView(List.generate(10, (i) => Blog.empty()))),
+          loading: () =>  Skeletonizer(child: _buildListView(List.generate(10, (i) => Blog.empty()))),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -71,6 +73,11 @@ class HomePage extends ConsumerWidget {
             return ListTile(
               title: Text(blog.title, style: TextStyle(fontWeight: FontWeight.w600),),
               subtitle: Text(blog.detail),
+              trailing: Consumer(
+                builder: (context, ref, child) => IconButton(onPressed: (){
+                  ref.read(blogControllerProvider.notifier).removeBlog(blog.id);
+                }, icon: Icon(Icons.delete) ),
+              ),
             );
           },
         );
