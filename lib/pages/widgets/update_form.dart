@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chaitra/models/blog.dart';
 import 'package:flutter_chaitra/providers/blog_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,26 +8,27 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 
 
-class AddForm extends ConsumerStatefulWidget {
-  const AddForm({super.key});
+class UpdateForm extends ConsumerStatefulWidget {
+  final Blog blog;
+  const UpdateForm({super.key, required this.blog});
 
   @override
-  ConsumerState<AddForm> createState() => _AddFormState();
+  ConsumerState<UpdateForm> createState() => _UpdateFormState();
 }
 
-class _AddFormState extends ConsumerState<AddForm> {
+class _UpdateFormState extends ConsumerState<UpdateForm> {
   final _form = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     ref.listen(blogControllerProvider, (previous, next) {
       next.maybeWhen(
           data: (data){
-        context.pop();
-        Fluttertoast.showToast(
-            msg: 'Blog Added Successfully',
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM);
-      }, error: (err, st){
+            context.pop();
+            Fluttertoast.showToast(
+                msg: 'Blog Updated Successfully',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM);
+          }, error: (err, st){
         Fluttertoast.showToast(
             msg: err.toString(),
             toastLength: Toast.LENGTH_SHORT,
@@ -47,16 +49,19 @@ class _AddFormState extends ConsumerState<AddForm> {
                 children: [
                   SizedBox(height: 20,),
                   FormBuilderTextField(
-                      name: 'title',
+                    name: 'title',
+                    initialValue: widget.blog.title ,
                     decoration: InputDecoration(
-                      hintText: 'Title'
+                        hintText: 'Title'
                     ),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required()
                     ]),
                   ),
                   SizedBox(height: 16,),
-                  FormBuilderTextField(name: 'detail',
+                  FormBuilderTextField(
+                    name: 'detail',
+                    initialValue: widget.blog.detail ,
                     decoration: InputDecoration(
                         hintText: 'Detail'
                     ),
@@ -70,7 +75,7 @@ class _AddFormState extends ConsumerState<AddForm> {
                         FocusScope.of(context).unfocus();
                         if(_form.currentState!.saveAndValidate(focusOnInvalid: false)){
                           final data = _form.currentState!.value;
-                          ref.read(blogControllerProvider.notifier).addBlog(data);
+                          ref.read(blogControllerProvider.notifier).updateBlog(data, widget.blog.id);
 
                         }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/models/blog.dart';
 import 'package:flutter_chaitra/pages/widgets/add_form.dart';
+import 'package:flutter_chaitra/pages/widgets/remove_blog.dart';
+import 'package:flutter_chaitra/pages/widgets/update_form.dart';
 import 'package:flutter_chaitra/providers/blog_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -29,35 +31,48 @@ class HomePage extends ConsumerWidget {
 
     print('==================');
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Blogs'),
-      ),
-      body: RefreshIndicator(
-        onRefresh: ()async{
-          await ref.refresh(blogControllerProvider.future);
-        },
-        child: blogsState.when(
-          skipError: true,
-          skipLoadingOnReload: true,
-          data: (data) {
-            return _buildListView(data);
-          },
-          error: (err, st) {
-            return Text('$err');
-          },
-          loading: () =>  Skeletonizer(child: _buildListView(List.generate(10, (i) => Blog.empty()))),
+    return LoaderOverlay(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Blogs'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            showDialog(
-                barrierDismissible: false,
-                context: context, builder: (context) => AlertDialog(
-              content: AddForm(),
-            ));
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            await ref.refresh(blogControllerProvider.future);
           },
-        child: Icon(Icons.add),
+          child: blogsState.when(
+            skipError: true,
+            skipLoadingOnReload: true,
+            data: (data) {
+              return _buildListView(data);
+            },
+            error: (err, st) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('$err'),
+                    ElevatedButton(onPressed: (){
+                      ref.invalidate(blogControllerProvider);
+                    }, child: Text('Refresh'))
+                  ],
+                ),
+              );
+            },
+            loading: () =>  Skeletonizer(child: _buildListView(List.generate(10, (i) => Blog.empty()))),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: (){
+              showDialog(
+                  barrierDismissible: false,
+                  context: context, builder: (context) => AlertDialog(
+                content: AddForm(),
+              ));
+            },
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
@@ -74,9 +89,22 @@ class HomePage extends ConsumerWidget {
               title: Text(blog.title, style: TextStyle(fontWeight: FontWeight.w600),),
               subtitle: Text(blog.detail),
               trailing: Consumer(
-                builder: (context, ref, child) => IconButton(onPressed: (){
-                  ref.read(blogControllerProvider.notifier).removeBlog(blog.id);
-                }, icon: Icon(Icons.delete) ),
+                builder: (context, ref, child) => SizedBox(
+                  width: 100,
+                  child: Row(
+                    children: [
+                      IconButton(onPressed: (){
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context, builder: (context) => AlertDialog(
+                          content: UpdateForm(blog: blog,),
+                        ));
+                      }, icon: Icon(Icons.edit) ),
+                    RemoveBlog(id: blog.id),
+
+                    ],
+                  ),
+                ),
               ),
             );
           },

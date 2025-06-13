@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_chaitra/exceptions/api_exception.dart';
 import 'package:flutter_chaitra/models/blog.dart';
 import 'package:flutter_chaitra/shared/client_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,7 +18,7 @@ class BlogRepository {
         final response = await _client.get('/blogs');
         return (response.data as List).map((e) => Blog.fromJson(e)).toList();
       }on DioException catch(err){
-        throw '${err.response}';
+        throw ApiException(err).errorMessage;
       }
   }
 
@@ -26,15 +27,25 @@ class BlogRepository {
      final response =  await _client.post('/blogs', data: json);
      return Blog.fromJson(response.data);
     }on DioException catch(err){
-      throw '${err.response}';
+      throw ApiException(err).errorMessage;
     }
   }
+
+  Future<Blog> updateBlog(Map<String, dynamic> json, String id) async {
+    try{
+      final response =  await _client.patch('/blogs/$id', data: json);
+      return Blog.fromJson(response.data);
+    }on DioException catch(err){
+      throw ApiException(err).errorMessage;
+    }
+  }
+
 
   Future<void> removeBlog(String id) async {
     try{
        await _client.delete('/blogs/$id');
     }on DioException catch(err){
-      throw '${err.response}';
+      throw ApiException(err).errorMessage;
     }
   }
   
