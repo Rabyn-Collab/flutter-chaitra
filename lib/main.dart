@@ -2,53 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-
-/// provider, notifier_provider, future_provider, async_notifier_provider, stream_provider
-
-
-// Future<String> some() async {
-//    await Future.delayed(const Duration(seconds: 2));
-//    throw SomeException('something went wrong');
-// }
-
-// class SomeException implements Exception {
-//   final String message;
-//   SomeException(this.message);
-//
-//   // @override
-//   // String toString() => message;
-// }
-
-// class M {
-//   final String message = 'hello';
-//   M(this.message);
-// }
-void main ()async {
-
-  // try{
-  //   // await some();
-  // }catch (err){
-  //    print(err);
-  // }
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ProviderScope(
-      overrides: [],
-      child: Main()));
+  runApp(ProviderScope(child: const App()));
 }
 
-
-
-
-class Main extends ConsumerWidget {
-  const Main({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       routerConfig: router,
+      theme: ThemeData(
+        colorSchemeSeed: Color(0xFFD4AF37), // Gold seed
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFB8860B), // Dark Gold
+          foregroundColor: Colors.white,
+          elevation: 0,
+        ),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 10.0,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0xFF5A5A5A), // Neutral dark gray for contrast
+              width: 2.0,
+            ),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color(0xFFB8860B), // Dark Gold
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

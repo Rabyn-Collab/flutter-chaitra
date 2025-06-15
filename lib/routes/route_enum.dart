@@ -1,9 +1,8 @@
 
 
 
-
-enum AppRoute {
+enum RouteEnum{
   home,
-  webView,
-  search
+  login,
+  signup
 }

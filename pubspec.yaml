@@ -51,6 +51,7 @@ dependencies:
   riverpod_annotation: ^2.6.1
   loader_overlay: ^5.0.0
   fluttertoast: ^8.2.12
+  gap: ^3.0.1
 
 
   new_pod_player:
