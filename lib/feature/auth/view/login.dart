@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +43,7 @@ class _LoginState extends State<Login> {
             const Gap(40),
 
             FormBuilder(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -65,7 +67,12 @@ class _LoginState extends State<Login> {
                     ),
                     const Gap(20),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        if(_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+                          print(_formKey.currentState!.value);
+                        }
+                      },
                       child: const Text('Login'),
                     )
                   ],

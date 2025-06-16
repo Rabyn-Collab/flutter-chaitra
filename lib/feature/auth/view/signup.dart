@@ -12,6 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +83,12 @@ class _SignUpState extends State<SignUp> {
                     ),
                     const Gap(20),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+                        if(_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
+                         // print(_formKey.currentState!.value);
+                        }
+                      },
                       child: const Text('SignUp'),
                     )
                   ],
