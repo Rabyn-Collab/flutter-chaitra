@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chaitra/feature/auth/view/controllers/auth_controller.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  ConsumerState<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    ref.listen(loginControllerProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        data: (data) {
+          Fluttertoast.showToast(msg: 'Login Success');
+        },
+        error: (err, st){
+          Fluttertoast.showToast(msg: '$err');
+        }
+
+      );
+    });
+    final loginController = ref.watch(loginControllerProvider);
     return Scaffold(
-      appBar: AppBar(
-        // title: const Text('User Login'),
-      ),
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ListView(
           children: [
             const Gap(40),
-
             Row(
               children: [
                 FlutterLogo(size: 100 ,),
@@ -67,13 +80,14 @@ class _LoginState extends State<Login> {
                     ),
                     const Gap(20),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: loginController.isLoading ? null : () {
                         FocusScope.of(context).unfocus();
                         if(_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
-                          print(_formKey.currentState!.value);
+                           final map = _formKey.currentState!.value;
+                           ref.read(loginControllerProvider.notifier).userLogin(map);
                         }
                       },
-                      child: const Text('Login'),
+                      child: loginController.isLoading ? const CircularProgressIndicator() : const Text('Login'),
                     )
                   ],
                 )

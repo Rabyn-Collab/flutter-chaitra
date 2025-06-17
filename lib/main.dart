@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'main.g.dart';
+
+
+@riverpod
+Box hiveBox (Ref ref) {
+  throw UnimplementedError();
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ProviderScope(child: const App()));
+   await Hive.initFlutter();
+  final box = await Hive.openBox('box');
+  runApp(ProviderScope(
+      overrides: [
+       hiveBoxProvider.overrideWithValue(box)
+      ],
+      child: const App()));
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final router = ref.watch(goRouterProvider);
     return MaterialApp.router(
       routerConfig: router,
       theme: ThemeData(

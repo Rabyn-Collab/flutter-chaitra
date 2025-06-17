@@ -34,6 +34,8 @@ class ApiException{
             return exception.response?.data['message'] ??'Not Found – The requested resource could not be found on the server.';
           case 405:
             return 'Method Not Allowed – The request method is known by the server but is not supported by the target resource.';
+          case 409:
+            return 'user already exist';
           case 413:
             return 'Payload Too Large – The request is larger than the server is willing or able to process.';
           case 415:

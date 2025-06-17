@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chaitra/feature/auth/view/controllers/auth_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
+    ref.listen(signUpControllerProvider, (previous, next) {
+      next.maybeWhen(
+          orElse: () => null,
+          data: (data) {
+            Fluttertoast.showToast(msg: 'SignUp Success');
+            context.pop();
+          },
+          error: (err, st){
+            Fluttertoast.showToast(msg: '$err');
+          }
+
+      );
+    });
+    final signUpController = ref.watch(signUpControllerProvider);
     return Scaffold(
       appBar: AppBar(
         // title: const Text('User SignUp'),
@@ -42,6 +59,7 @@ class _SignUpState extends State<SignUp> {
             const Gap(40),
 
             FormBuilder(
+              key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -83,13 +101,14 @@ class _SignUpState extends State<SignUp> {
                     ),
                     const Gap(20),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: signUpController.isLoading ? null : () {
                         FocusScope.of(context).unfocus();
                         if(_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
-                         // print(_formKey.currentState!.value);
+                         final map = _formKey.currentState!.value;
+                          ref.read(signUpControllerProvider.notifier).userSignup(map);
                         }
                       },
-                      child: const Text('SignUp'),
+                      child: signUpController.isLoading ? const CircularProgressIndicator() : const Text('SignUp'),
                     )
                   ],
                 )

@@ -13,5 +13,6 @@ class User with _$User {
     required String email,
 }) = _User;
 
+  factory User.empty() => const User(token: '', role: '', username: '', email: '');
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

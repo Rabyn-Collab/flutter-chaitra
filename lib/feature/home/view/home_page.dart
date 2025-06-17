@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chaitra/feature/home/view/widgets/drawer.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -6,6 +7,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      drawer: DrawerWidget(),
+      appBar: AppBar(
+        title: const Text('Home'),
+      ),
+    );
   }
 }
