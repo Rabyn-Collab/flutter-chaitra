@@ -39,7 +39,7 @@ class ApiException{
           case 413:
             return 'Payload Too Large – The request is larger than the server is willing or able to process.';
           case 415:
-            return 'Unsupported Media Type – The media format of the requested data is not supported by the server.';
+            return 'Unsupported Media Type – The media format of the requested repository is not supported by the server.';
           case 429:
             return 'Too Many Requests – You have sent too many requests in a given amount of time.';
           case 500:

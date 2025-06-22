@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/home/view/widgets/drawer.dart';
+import 'package:flutter_chaitra/feature/products/view/products_list.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -12,6 +13,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
+      body: ProductsList(),
     );
   }
 }
