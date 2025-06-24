@@ -1,6 +1,9 @@
+import 'package:flutter_chaitra/feature/admin/view/add_form.dart';
+import 'package:flutter_chaitra/feature/admin/view/admin_panel.dart';
 import 'package:flutter_chaitra/feature/auth/view/login.dart';
 import 'package:flutter_chaitra/feature/auth/view/signup.dart';
 import 'package:flutter_chaitra/feature/home/view/home_page.dart';
+import 'package:flutter_chaitra/feature/search/view/search_page.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -38,6 +41,26 @@ GoRouter goRouter(Ref ref) {
         name: RouteEnum.signup.name,
         pageBuilder:
             (context, state) => NoTransitionPage(child: const SignUp()),
+      ),
+      GoRoute(
+        path: '/search',
+        name: RouteEnum.search.name,
+        pageBuilder:
+            (context, state) => NoTransitionPage(child: const SearchPage()),
+      ),
+      GoRoute(
+        path: '/admin',
+        name: RouteEnum.admin.name,
+        pageBuilder:
+            (context, state) => NoTransitionPage(child: const AdminPanel()),
+        routes: [
+          GoRoute(
+            path: 'add',
+            name: RouteEnum.add.name,
+            pageBuilder:
+                (context, state) => NoTransitionPage(child: const AddForm()),
+          ),
+        ]
       ),
     ],
   );

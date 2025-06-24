@@ -4,5 +4,8 @@
 enum RouteEnum{
   home,
   login,
-  signup
+  signup,
+  search,
+  admin,
+  add
 }

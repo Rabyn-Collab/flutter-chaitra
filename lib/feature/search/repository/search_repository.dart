@@ -6,28 +6,27 @@ import 'package:flutter_chaitra/feature/shared/client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'product_repository.g.dart';
+part 'search_repository.g.dart';
 
 
-class ProductRepository{
-
+class SearchRepository {
   final Dio client;
-  ProductRepository({required this.client});
+  SearchRepository({required this.client});
 
-Future<List<Product>> getProducts() async {
+  Future<List<Product>> getSearchProducts(String searchText) async {
+
     try{
-      final response = await client.get(products);
+      final response = await client.get(products, queryParameters: { 'search': searchText });
+
       return (response.data['products'] as List).map((e) => Product.fromJson(e)).toList();
     }on DioException catch(err){
       throw ApiException(err).errorMessage;
     }
+
   }
-
-
 }
 
-
 @riverpod
-ProductRepository productRepository  (Ref ref) {
-  return ProductRepository(client: ref.watch(clientProvider));
+SearchRepository searchRepository  (Ref ref) {
+  return SearchRepository(client: ref.watch(clientProvider));
 }

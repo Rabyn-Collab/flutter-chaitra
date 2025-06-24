@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 
 class DrawerWidget extends ConsumerWidget {
@@ -10,6 +12,7 @@ class DrawerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final user = ref.watch(userStateControllerProvider);
+
     return Drawer(
       child: ListView(
         children: [
@@ -27,6 +30,13 @@ class DrawerWidget extends ConsumerWidget {
                   Text(user.email),
                 ],
               )
+          ),
+          if (user.role == 'Admin') ListTile(
+            leading: const Icon(Icons.admin_panel_settings),
+            title: const Text('Admin Panel'),
+            onTap: (){
+              context.pushNamed(RouteEnum.admin.name);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout),
