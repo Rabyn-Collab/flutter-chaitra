@@ -4,6 +4,7 @@ import 'package:flutter_chaitra/exceptions/api_exception.dart';
 import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/shared/client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'product_repository.g.dart';
@@ -23,11 +24,22 @@ Future<List<Product>> getProducts() async {
     }
   }
 
+  Future<void> addProduct(Map<String, dynamic> data, XFile image) async {
+    final formData = FormData.fromMap({
+      ...data,
+      'image': await MultipartFile.fromFile(image.path),
+    });
+    try{
+      await client.post(products, data: formData);
+    }on DioException catch(err){
+      throw ApiException(err).errorMessage;
+    }
+  }
 
 }
 
 
 @riverpod
 ProductRepository productRepository  (Ref ref) {
-  return ProductRepository(client: ref.watch(clientProvider));
+  return ProductRepository(client: ref.watch(authClientProvider));
 }

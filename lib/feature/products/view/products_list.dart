@@ -16,13 +16,17 @@ class ProductsList extends ConsumerWidget {
     final productState = ref.watch(getProductsProvider);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: productState.when(
-        data: (data) {
-          return _buildDynamicHeightGridView(data, false);
-        },
-        error: (err, st) => Text(err.toString()),
-        loading: () => Skeletonizer(child: _buildDynamicHeightGridView(
-            List.generate(5, (index) => Product.empty()), true)),
+      child: RefreshIndicator(
+        onRefresh: () => ref.refresh(getProductsProvider.future),
+        child: productState.when(
+
+          data: (data) {
+            return _buildDynamicHeightGridView(data, false);
+          },
+          error: (err, st) => Text(err.toString()),
+          loading: () => Skeletonizer(child: _buildDynamicHeightGridView(
+              List.generate(5, (index) => Product.empty()), true)),
+        ),
       ),
     );
   }
@@ -51,7 +55,7 @@ class ProductsList extends ConsumerWidget {
           ),
         );
       },
-      itemCount: 2,
+      itemCount: data.length,
       crossAxisCount: 2,
     );
   }

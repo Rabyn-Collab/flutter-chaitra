@@ -52,6 +52,7 @@ dependencies:
   loader_overlay: ^5.0.0
   fluttertoast: ^8.2.12
   gap: ^3.0.1
+  image_picker: ^1.1.2
 
 
   new_pod_player:
