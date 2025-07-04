@@ -7,5 +7,6 @@ enum RouteEnum{
   signup,
   search,
   admin,
-  add
+  add,
+  update
 }

@@ -24,6 +24,20 @@ Future<List<Product>> getProducts() async {
     }
   }
 
+  Future<void> updateProduct({required Map<String, dynamic> data ,XFile? image, required String id}) async {
+    final formData = FormData.fromMap({
+      ...data,
+     if(image != null) 'image': await MultipartFile.fromFile(image.path),
+    });
+    try{
+      await client.patch('$products/$id', data: formData);
+    }on DioException catch(err){
+      throw ApiException(err).errorMessage;
+    }
+  }
+
+
+
   Future<void> addProduct(Map<String, dynamic> data, XFile image) async {
     final formData = FormData.fromMap({
       ...data,

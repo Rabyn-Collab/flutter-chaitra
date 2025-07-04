@@ -43,7 +43,9 @@ class AdminPanel extends ConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.edit),),
+                          IconButton(onPressed: (){
+                            context.pushNamed(RouteEnum.update.name, extra: data[index]);
+                          }, icon: const Icon(Icons.edit),),
                           IconButton(onPressed: (){}, icon: const Icon(Icons.delete),),
                         ],
                       ),

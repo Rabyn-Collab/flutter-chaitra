@@ -1,8 +1,10 @@
 import 'package:flutter_chaitra/feature/admin/view/add_form.dart';
 import 'package:flutter_chaitra/feature/admin/view/admin_panel.dart';
+import 'package:flutter_chaitra/feature/admin/view/edit_form.dart';
 import 'package:flutter_chaitra/feature/auth/view/login.dart';
 import 'package:flutter_chaitra/feature/auth/view/signup.dart';
 import 'package:flutter_chaitra/feature/home/view/home_page.dart';
+import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/search/view/search_page.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
@@ -59,6 +61,12 @@ GoRouter goRouter(Ref ref) {
             name: RouteEnum.add.name,
             pageBuilder:
                 (context, state) => NoTransitionPage(child: const AddForm()),
+          ),
+          GoRoute(
+            path: 'update',
+            name: RouteEnum.update.name,
+            pageBuilder:
+                (context, state) => NoTransitionPage(child:  EditForm(product: state.extra as Product)),
           ),
         ]
       ),
