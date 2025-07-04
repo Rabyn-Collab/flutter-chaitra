@@ -24,6 +24,18 @@ Future<List<Product>> getProducts() async {
     }
   }
 
+  Future<void> addProduct(Map<String, dynamic> data, XFile image) async {
+    final formData = FormData.fromMap({
+      ...data,
+      'image': await MultipartFile.fromFile(image.path),
+    });
+    try{
+      await client.post(products, data: formData);
+    }on DioException catch(err){
+      throw ApiException(err).errorMessage;
+    }
+  }
+
   Future<void> updateProduct({required Map<String, dynamic> data ,XFile? image, required String id}) async {
     final formData = FormData.fromMap({
       ...data,
@@ -36,19 +48,18 @@ Future<List<Product>> getProducts() async {
     }
   }
 
-
-
-  Future<void> addProduct(Map<String, dynamic> data, XFile image) async {
-    final formData = FormData.fromMap({
-      ...data,
-      'image': await MultipartFile.fromFile(image.path),
-    });
+  Future<void> removeProduct({ required String id}) async {
     try{
-      await client.post(products, data: formData);
+      await client.delete('$products/$id');
     }on DioException catch(err){
+      print(err);
       throw ApiException(err).errorMessage;
     }
   }
+
+
+
+
 
 }
 

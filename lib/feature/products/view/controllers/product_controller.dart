@@ -27,4 +27,9 @@ class ProductController extends _$ProductController {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() => ref.read(productRepositoryProvider).updateProduct(data: data, image: image, id: id));
   }
+
+  Future<void> removeProduct({required String id}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => ref.read(productRepositoryProvider).removeProduct(id: id));
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_chaitra/constants/apis.dart';
 import 'package:flutter_chaitra/feature/products/view/controllers/product_controller.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +14,19 @@ class AdminPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(productControllerProvider, (previous, next) {
+      next.maybeWhen(
+          orElse: () => null,
+          data: (data) {
+            ref.invalidate(getProductsProvider);
+            Fluttertoast.showToast(msg: 'Product Removed Successfully');
+          },
+          error: (err, st) {
+            Fluttertoast.showToast(msg: '$err');
+          });
+    });
     final productState = ref.watch(getProductsProvider);
+
     return Scaffold(
       appBar: AppBar(
        actions: [
@@ -46,7 +59,21 @@ class AdminPanel extends ConsumerWidget {
                           IconButton(onPressed: (){
                             context.pushNamed(RouteEnum.update.name, extra: data[index]);
                           }, icon: const Icon(Icons.edit),),
-                          IconButton(onPressed: (){}, icon: const Icon(Icons.delete),),
+                          IconButton(onPressed: (){
+                           showDialog(context: context, builder: (context) => AlertDialog(
+                             title: const Text('Delete Product'),
+                             content: const Text('Are you sure you want to delete this product?'),
+                             actions: [
+                               TextButton(onPressed: () => context.pop(), child: const Text('Cancel')),
+                               TextButton(onPressed: () async {
+                                context.pop();
+                                ref.read(productControllerProvider.notifier).removeProduct(id: data[index].id);
+                               }, child: const Text('Delete')),
+                             ]
+                           ));
+
+
+                          }, icon: const Icon(Icons.delete),),
                         ],
                       ),
                     )
