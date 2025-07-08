@@ -22,7 +22,7 @@ final getProductsProvider = AutoDisposeFutureProvider<List<Product>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetProductsRef = AutoDisposeFutureProviderRef<List<Product>>;
-String _$productControllerHash() => r'83287612313f88d410ab334eaa4b84250edea044';
+String _$productControllerHash() => r'af771d30db552b1da10ba30ec1afd3de9061af19';
 
 /// See also [ProductController].
 @ProviderFor(ProductController)

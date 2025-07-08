@@ -22,7 +22,7 @@ final clientProvider = AutoDisposeProvider<Dio>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ClientRef = AutoDisposeProviderRef<Dio>;
-String _$authClientHash() => r'b7842f98158d5c8e021e49aacc5caf03633c63af';
+String _$authClientHash() => r'c184ab27be30ab68b82698693fe053f674183985';
 
 /// See also [authClient].
 @ProviderFor(authClient)

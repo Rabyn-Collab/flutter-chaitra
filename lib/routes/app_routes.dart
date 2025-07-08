@@ -7,6 +7,7 @@ import 'package:flutter_chaitra/feature/home/view/home_page.dart';
 import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/search/view/search_page.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
+import 'package:flutter_chaitra/feature/user/view/profile.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -49,6 +50,11 @@ GoRouter goRouter(Ref ref) {
         name: RouteEnum.search.name,
         pageBuilder:
             (context, state) => NoTransitionPage(child: const SearchPage()),
+      ),
+      GoRoute(
+          path: '/profile',
+          name: RouteEnum.profile.name,
+          pageBuilder:(context, state) => NoTransitionPage(child: const Profile())
       ),
       GoRoute(
         path: '/admin',
