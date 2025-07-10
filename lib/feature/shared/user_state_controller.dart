@@ -17,8 +17,8 @@ class UserStateController extends _$UserStateController {
 
   void setUser(Map<String, dynamic> user) {
     final box = ref.watch(hiveBoxProvider);
-    box.put('user', jsonEncode(user));
-    state = User.fromJson(user);
+    box.put('user', jsonEncode({...state.toJson(), ...user}));
+    state = User.fromJson({...state.toJson(), ...user});
   }
 
   void clearUser() {

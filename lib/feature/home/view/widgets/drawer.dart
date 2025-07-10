@@ -38,6 +38,14 @@ class DrawerWidget extends ConsumerWidget {
               context.pushNamed(RouteEnum.admin.name);
             },
           ),
+
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: const Text('Profile'),
+            onTap: (){
+              context.pushNamed(RouteEnum.profile.name);
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
