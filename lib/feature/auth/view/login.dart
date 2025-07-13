@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/auth/view/controllers/auth_controller.dart';
+import 'package:flutter_chaitra/feature/auth/view/controllers/pass_controller.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,6 +33,7 @@ class _LoginState extends ConsumerState<Login> {
       );
     });
     final loginController = ref.watch(loginControllerProvider);
+    final passShow = ref.watch(passControllerProvider(1));
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -72,11 +74,15 @@ class _LoginState extends ConsumerState<Login> {
                     const Gap(20),
                     FormBuilderTextField(
                       name: 'password',
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         labelText: 'Password',
+                        suffixIcon: IconButton(onPressed: (){
+                          ref.read(passControllerProvider(1).notifier).toggle();
+                        }, icon:Icon(passShow ? Icons.lock : Icons.lock_open_sharp))
                       ),
+
                       validator: FormBuilderValidators.required(),
-                      obscureText: true,
+                      obscureText: passShow,
                     ),
                     const Gap(20),
                     ElevatedButton(

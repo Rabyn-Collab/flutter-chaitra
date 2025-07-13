@@ -9,5 +9,6 @@ enum RouteEnum{
   admin,
   add,
   update,
-  profile
+  profile,
+  product
 }

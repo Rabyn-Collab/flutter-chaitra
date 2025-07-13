@@ -7,6 +7,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import 'controllers/pass_controller.dart';
+
 class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
@@ -32,6 +34,7 @@ class _SignUpState extends ConsumerState<SignUp> {
       );
     });
     final signUpController = ref.watch(signUpControllerProvider);
+    final passShow = ref.watch(passControllerProvider(2));
     return Scaffold(
       appBar: AppBar(
         // title: const Text('User SignUp'),
@@ -89,15 +92,19 @@ class _SignUpState extends ConsumerState<SignUp> {
                     const Gap(20),
                     FormBuilderTextField(
                       name: 'password',
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                         labelText: 'Password',
+                          suffixIcon: IconButton(onPressed: (){
+                            ref.read(passControllerProvider(2).notifier).toggle();
+                          }, icon:Icon(passShow ? Icons.lock : Icons.lock_open_sharp))
                       ),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(),
                         FormBuilderValidators.minLength(5),
                         FormBuilderValidators.maxLength(20),
                       ]),
-                      obscureText: true,
+
+                      obscureText: passShow,
                     ),
                     const Gap(20),
                     ElevatedButton(

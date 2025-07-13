@@ -4,6 +4,7 @@ import 'package:flutter_chaitra/feature/admin/view/edit_form.dart';
 import 'package:flutter_chaitra/feature/auth/view/login.dart';
 import 'package:flutter_chaitra/feature/auth/view/signup.dart';
 import 'package:flutter_chaitra/feature/home/view/home_page.dart';
+import 'package:flutter_chaitra/feature/product/view/product_page.dart';
 import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/search/view/search_page.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
@@ -31,6 +32,13 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/',
         pageBuilder: (context, state) => NoTransitionPage(child: const HomePage()),
+        routes: [
+          GoRoute(
+            path: 'product',
+            name: RouteEnum.product.name,
+            pageBuilder: (context, state) => NoTransitionPage(child: ProductPage(product: state.extra as Product),)
+          )
+        ]
       ),
 
       GoRoute(

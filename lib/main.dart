@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'feature/cart/model/cart_item.dart';
+
 part 'main.g.dart';
 
 
@@ -12,12 +14,20 @@ Box hiveBox (Ref ref) {
   throw UnimplementedError();
 }
 
+@riverpod
+List<CartItem> cartBox (Ref ref) {
+  throw UnimplementedError();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    await Hive.initFlutter();
+   Hive.registerAdapter(CartItemAdapter());
+   final cartBox = await Hive.openBox<CartItem>('cart');
   final box = await Hive.openBox('box');
   runApp(ProviderScope(
       overrides: [
+        cartBoxProvider.overrideWithValue(cartBox.values.toList()),
        hiveBoxProvider.overrideWithValue(box)
       ],
       child: const App()));
