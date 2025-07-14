@@ -5,18 +5,22 @@ part 'cart_item.g.dart';
 class CartItem extends HiveObject {
 
   @HiveField(0)
-  String title;
+  String id;
 
   @HiveField(1)
-  String image;
+  String title;
 
   @HiveField(2)
-  int price;
+  String image;
 
   @HiveField(3)
+  int price;
+
+  @HiveField(4)
   int qty;
 
 
-  CartItem({required this.title, required this.image, required this.price, required this.qty});
+  CartItem({required this.title, required this.image, required this.price, required this.qty, required this.id});
+  factory CartItem.empty() => CartItem(title: '', image: '', price: 0, qty: 0, id: '');
 
 }

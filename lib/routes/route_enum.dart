@@ -10,5 +10,6 @@ enum RouteEnum{
   add,
   update,
   profile,
-  product
+  product,
+  cart
 }

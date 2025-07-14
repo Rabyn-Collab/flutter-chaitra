@@ -17,24 +17,27 @@ class CartItemAdapter extends TypeAdapter<CartItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CartItem(
-      title: fields[0] as String,
-      image: fields[1] as String,
-      price: fields[2] as int,
-      qty: fields[3] as int,
+      title: fields[1] as String,
+      image: fields[2] as String,
+      price: fields[3] as int,
+      qty: fields[4] as int,
+      id: fields[0] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CartItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.title)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.image)
+      ..write(obj.title)
       ..writeByte(2)
-      ..write(obj.price)
+      ..write(obj.image)
       ..writeByte(3)
+      ..write(obj.price)
+      ..writeByte(4)
       ..write(obj.qty);
   }
 

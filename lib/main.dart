@@ -23,7 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
    await Hive.initFlutter();
    Hive.registerAdapter(CartItemAdapter());
-   final cartBox = await Hive.openBox<CartItem>('cart');
+   final cartBox = await Hive.openBox<CartItem>('carts');
   final box = await Hive.openBox('box');
   runApp(ProviderScope(
       overrides: [
