@@ -5,6 +5,8 @@ import 'package:flutter_chaitra/feature/auth/view/login.dart';
 import 'package:flutter_chaitra/feature/auth/view/signup.dart';
 import 'package:flutter_chaitra/feature/cart/view/cart_page.dart';
 import 'package:flutter_chaitra/feature/home/view/home_page.dart';
+import 'package:flutter_chaitra/feature/orders/view/order_page.dart';
+import 'package:flutter_chaitra/feature/orders/view/orders_list.dart';
 import 'package:flutter_chaitra/feature/product/view/product_page.dart';
 import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/search/view/search_page.dart';
@@ -48,6 +50,20 @@ GoRouter goRouter(Ref ref) {
         name: RouteEnum.cart.name,
         pageBuilder:
             (context, state) => NoTransitionPage(child: const CartPage()),
+      ),
+
+      GoRoute(
+        path: '/order',
+        name: RouteEnum.order.name,
+        pageBuilder:
+            (context, state) => NoTransitionPage(child: const OrdersList()),
+        routes:[
+          GoRoute(
+            path: 'detail',
+            name: RouteEnum.orderDetail.name,
+            pageBuilder: (context, state) => NoTransitionPage(child: OrderDetailPage(orderId: state.extra as String),)
+          )
+        ]
       ),
 
       GoRoute(

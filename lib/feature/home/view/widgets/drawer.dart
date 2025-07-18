@@ -46,6 +46,13 @@ class DrawerWidget extends ConsumerWidget {
               context.pushNamed(RouteEnum.profile.name);
             },
           ),
+          if (user.role != 'Admin') ListTile(
+            leading: const Icon(Icons.history),
+            title: const Text('Order History'),
+            onTap: (){
+              context.pushNamed(RouteEnum.order.name);
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),

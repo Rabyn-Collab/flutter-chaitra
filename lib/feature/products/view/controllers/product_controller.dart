@@ -14,6 +14,16 @@ Future<List<Product>> getProducts (Ref ref) {
 
 
 @riverpod
+class ProductRemoveController extends _$ProductRemoveController {
+  @override
+  FutureOr<void> build() {}
+  Future<void> removeProduct({required String id}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => ref.read(productRepositoryProvider).removeProduct(id: id));
+  }
+}
+
+@riverpod
 class ProductController extends _$ProductController {
   @override
   FutureOr<void> build() {}
@@ -28,8 +38,5 @@ class ProductController extends _$ProductController {
     state = await AsyncValue.guard(() => ref.read(productRepositoryProvider).updateProduct(data: data, image: image, id: id));
   }
 
-  Future<void> removeProduct({required String id}) async {
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(() => ref.read(productRepositoryProvider).removeProduct(id: id));
-  }
+
 }

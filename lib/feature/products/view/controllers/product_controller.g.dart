@@ -22,7 +22,24 @@ final getProductsProvider = AutoDisposeFutureProvider<List<Product>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetProductsRef = AutoDisposeFutureProviderRef<List<Product>>;
-String _$productControllerHash() => r'af771d30db552b1da10ba30ec1afd3de9061af19';
+String _$productRemoveControllerHash() =>
+    r'7fd330bf1c7649d2edf5eb63fd3856dcea38d2fd';
+
+/// See also [ProductRemoveController].
+@ProviderFor(ProductRemoveController)
+final productRemoveControllerProvider =
+    AutoDisposeAsyncNotifierProvider<ProductRemoveController, void>.internal(
+  ProductRemoveController.new,
+  name: r'productRemoveControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$productRemoveControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ProductRemoveController = AutoDisposeAsyncNotifier<void>;
+String _$productControllerHash() => r'a16e75a6894499d70a6eb25bbb3f0ff7d7fe2802';
 
 /// See also [ProductController].
 @ProviderFor(ProductController)

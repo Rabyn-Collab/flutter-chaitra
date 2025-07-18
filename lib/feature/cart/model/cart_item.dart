@@ -23,4 +23,12 @@ class CartItem extends HiveObject {
   CartItem({required this.title, required this.image, required this.price, required this.qty, required this.id});
   factory CartItem.empty() => CartItem(title: '', image: '', price: 0, qty: 0, id: '');
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'image': image,
+    'price': price,
+    'qty': qty,
+  };
+
 }

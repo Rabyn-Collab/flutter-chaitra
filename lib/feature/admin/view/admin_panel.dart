@@ -14,7 +14,7 @@ class AdminPanel extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.listen(productControllerProvider, (previous, next) {
+    ref.listen(productRemoveControllerProvider, (previous, next) {
       next.maybeWhen(
           orElse: () => null,
           data: (data) {
@@ -67,7 +67,7 @@ class AdminPanel extends ConsumerWidget {
                                TextButton(onPressed: () => context.pop(), child: const Text('Cancel')),
                                TextButton(onPressed: () async {
                                 context.pop();
-                                ref.read(productControllerProvider.notifier).removeProduct(id: data[index].id);
+                                ref.read(productRemoveControllerProvider.notifier).removeProduct(id: data[index].id);
                                }, child: const Text('Delete')),
                              ]
                            ));

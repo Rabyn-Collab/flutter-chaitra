@@ -14,7 +14,7 @@ class CartController extends _$CartController {
   }
 
   void addToCart(Product product) {
-    print('hello');
+
     final isExist = state.firstWhere((e) => e.id == product.id, orElse: () => CartItem.empty());
 
     if (isExist.title.isEmpty) {
@@ -25,8 +25,9 @@ class CartController extends _$CartController {
         image: product.image,
         qty: 1
       );
-      state = [...state, newCartItem];
+
       Hive.box<CartItem>('carts').add(newCartItem);
+      state.add(newCartItem);
     } else {
         isExist.qty =  isExist.qty + 1;
         isExist.save();
@@ -51,6 +52,13 @@ class CartController extends _$CartController {
     ];
   }
 
+  void removeFromCart(CartItem item) {
+    Hive.box<CartItem>('carts').delete(item.id);
+    state = [
+      for(final i in state)
+        if (i.id != item.id) i
+    ];
+  }
 
   void clearCart() {
     Hive.box<CartItem>('carts').clear();

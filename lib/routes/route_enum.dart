@@ -11,5 +11,7 @@ enum RouteEnum{
   update,
   profile,
   product,
-  cart
+  cart,
+  order,
+  orderDetail
 }

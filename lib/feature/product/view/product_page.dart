@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/constants/apis.dart';
+import 'package:flutter_chaitra/feature/cart/view/controllers/cart_controller.dart';
 import 'package:flutter_chaitra/feature/products/models/product.dart';
 import 'package:flutter_chaitra/feature/shared/user_state_controller.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 
 
@@ -44,7 +47,10 @@ class ProductPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       ElevatedButton(
-                          onPressed: userState.role == 'Admin' ? null : () {}, child: Text('Add to Cart')),
+                          onPressed: userState.role == 'Admin' ? null : () {
+                            ref.read(cartControllerProvider.notifier).addToCart(product);
+                            context.pushNamed(RouteEnum.cart.name);
+                          }, child: Text('Add to Cart')),
                     ],
                   ),
                 );
