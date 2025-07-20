@@ -53,7 +53,7 @@ class CartController extends _$CartController {
   }
 
   void removeFromCart(CartItem item) {
-    Hive.box<CartItem>('carts').delete(item.id);
+    item.delete();
     state = [
       for(final i in state)
         if (i.id != item.id) i

@@ -25,10 +25,10 @@ class OrderRepository{
 
   }
 
-  Future<List<Order>> getOrderDetail(String orderId) async {
+  Future<Order> getOrderDetail(String orderId) async {
     try{
       final response = await client.get('/orders/$orderId');
-      return (response.data as List).map((e) => Order.fromJson(e)).toList();
+      return  Order.fromJson(response.data);
     }on DioException catch(err){
 
       throw ApiException(err).errorMessage;

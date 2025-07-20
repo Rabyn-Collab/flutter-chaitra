@@ -23,7 +23,7 @@ final getUserOrdersProvider = AutoDisposeFutureProvider<List<Order>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetUserOrdersRef = AutoDisposeFutureProviderRef<List<Order>>;
-String _$getOrderDetailHash() => r'8c32f783320a120cd8e73c25990be4cf08ecc054';
+String _$getOrderDetailHash() => r'98b06b187fb6662fca881427f014416f338064b5';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -51,7 +51,7 @@ class _SystemHash {
 const getOrderDetailProvider = GetOrderDetailFamily();
 
 /// See also [getOrderDetail].
-class GetOrderDetailFamily extends Family<AsyncValue<List<Order>>> {
+class GetOrderDetailFamily extends Family<AsyncValue<Order>> {
   /// See also [getOrderDetail].
   const GetOrderDetailFamily();
 
@@ -89,7 +89,7 @@ class GetOrderDetailFamily extends Family<AsyncValue<List<Order>>> {
 }
 
 /// See also [getOrderDetail].
-class GetOrderDetailProvider extends AutoDisposeFutureProvider<List<Order>> {
+class GetOrderDetailProvider extends AutoDisposeFutureProvider<Order> {
   /// See also [getOrderDetail].
   GetOrderDetailProvider({
     required String orderId,
@@ -124,7 +124,7 @@ class GetOrderDetailProvider extends AutoDisposeFutureProvider<List<Order>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<Order>> Function(GetOrderDetailRef provider) create,
+    FutureOr<Order> Function(GetOrderDetailRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -141,7 +141,7 @@ class GetOrderDetailProvider extends AutoDisposeFutureProvider<List<Order>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Order>> createElement() {
+  AutoDisposeFutureProviderElement<Order> createElement() {
     return _GetOrderDetailProviderElement(this);
   }
 
@@ -161,14 +161,13 @@ class GetOrderDetailProvider extends AutoDisposeFutureProvider<List<Order>> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetOrderDetailRef on AutoDisposeFutureProviderRef<List<Order>> {
+mixin GetOrderDetailRef on AutoDisposeFutureProviderRef<Order> {
   /// The parameter `orderId` of this provider.
   String get orderId;
 }
 
 class _GetOrderDetailProviderElement
-    extends AutoDisposeFutureProviderElement<List<Order>>
-    with GetOrderDetailRef {
+    extends AutoDisposeFutureProviderElement<Order> with GetOrderDetailRef {
   _GetOrderDetailProviderElement(super.provider);
 
   @override

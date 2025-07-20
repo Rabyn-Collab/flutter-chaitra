@@ -29,7 +29,9 @@ class OrdersList extends ConsumerWidget {
                      },
                      title: Text(order.id),
                      subtitle: Text('Rs. ${order.totalAmount}'),
-                     trailing: TextButton(onPressed: (){}, child: Text('View Detail')),
+                     trailing: TextButton(onPressed: (){
+                       context.pushNamed(RouteEnum.orderDetail.name, extra: order.id);
+                     }, child: Text('View Detail')),
                    ),
                  );
                },

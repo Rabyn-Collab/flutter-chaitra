@@ -13,7 +13,7 @@ Future<List<Order>> getUserOrders (Ref ref) async {
 
 
 @riverpod
-Future<List<Order>> getOrderDetail (Ref ref, {required String orderId}) async {
+Future<Order> getOrderDetail (Ref ref, {required String orderId}) async {
   return  ref.watch(orderRepositoryProvider).getOrderDetail(orderId);
 }
 
