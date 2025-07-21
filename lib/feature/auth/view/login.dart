@@ -28,19 +28,19 @@ class _LoginState extends ConsumerState<Login> {
           key: _formKey,
             child: ListView(
               children: [
-                FormBuilderCheckbox(
+                Gap(40),
+                FormBuilderTextField(
                     name: 'email',
-                    title: Text('Email'),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Email',
+                   hintText: 'Enter your email',
                   ),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                  //  FormBuilderValidators.email(),
+                    FormBuilderValidators.email(),
                   ]),
                 ),
-                Gap(16),
+                Gap(20),
                 FormBuilderTextField(
                   name: 'password',
                   obscureText: passShow,
@@ -48,7 +48,7 @@ class _LoginState extends ConsumerState<Login> {
                     border: OutlineInputBorder(),
                     labelText: 'Password',
                     suffixIcon: IconButton(
-                      icon: Icon(passShow ? Icons.visibility : Icons.visibility_off),
+                      icon: Icon(passShow ? Icons.visibility_off : Icons.visibility),
                       onPressed: () {
                         ref.read(passControllerProvider('Login').notifier).change();
                       },
@@ -58,7 +58,7 @@ class _LoginState extends ConsumerState<Login> {
                     FormBuilderValidators.required(),
                   ]),
                 ),
-                Gap(16),
+                Gap(20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
