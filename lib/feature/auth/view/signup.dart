@@ -97,11 +97,11 @@ class _SignUpState extends ConsumerState<SignUp> {
                     onPressed: () {
                       if (_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
                         final map = _formKey.currentState!.value;
-                        ref.read(signUpControllerProvider.notifier).signUp(
-                            username: map['username'],
-                            email: map['email'],
-                            password: map['password']
-                        );
+                        // ref.read(signUpControllerProvider.notifier).signUp(
+                        //     username: map['username'],
+                        //     email: map['email'],
+                        //     password: map['password']
+                        // );
 
                       }else{
                         ref.read(validateModeProvider('SignUp').notifier).change();

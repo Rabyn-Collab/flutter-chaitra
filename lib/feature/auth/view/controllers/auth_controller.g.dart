@@ -38,5 +38,21 @@ final signUpControllerProvider =
 );
 
 typedef _$SignUpController = AutoDisposeAsyncNotifier<void>;
+String _$signOutControllerHash() => r'b3d3d8f45f2d063846f46cb21461248613af1a02';
+
+/// See also [SignOutController].
+@ProviderFor(SignOutController)
+final signOutControllerProvider =
+    AutoDisposeAsyncNotifierProvider<SignOutController, void>.internal(
+  SignOutController.new,
+  name: r'signOutControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$signOutControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SignOutController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

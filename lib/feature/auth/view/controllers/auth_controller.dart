@@ -1,4 +1,5 @@
 import 'package:flutter_chaitra/feature/auth/repository/auth_repository.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_controller.g.dart';
@@ -20,8 +21,22 @@ class LoginController extends _$LoginController {
 class SignUpController extends _$SignUpController {
   @override
   FutureOr<void> build()  {}
-  Future<void> signUp({required String username, required String email, required String password}) async{
+  Future<void> signUp({required String username, required String email, required String password, required XFile image}) async{
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() => ref.read(authRepositoryProvider).signUp(username: username, email: email, password: password));
+    state = await AsyncValue.guard(() => ref.read(authRepositoryProvider).signUp(
+        username: username, email: email, password: password,
+    image: image
+    ));
+  }
+}
+
+@riverpod
+class SignOutController extends _$SignOutController {
+  @override
+  FutureOr<void> build(){}
+
+  Future<void> logOut() async{
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => ref.read(authRepositoryProvider).logOut());
   }
 }
