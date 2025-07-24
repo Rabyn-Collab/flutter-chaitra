@@ -316,5 +316,22 @@ class _PassControllerProviderElement
   @override
   String get label => (origin as PassControllerProvider).label;
 }
+
+String _$imageControllerHash() => r'48b61d4f2f221c352685142e282ee792f69d2146';
+
+/// See also [ImageController].
+@ProviderFor(ImageController)
+final imageControllerProvider =
+    AutoDisposeNotifierProvider<ImageController, XFile?>.internal(
+  ImageController.new,
+  name: r'imageControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$imageControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$ImageController = AutoDisposeNotifier<XFile?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

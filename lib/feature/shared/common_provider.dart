@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'common_provider.g.dart';
@@ -27,5 +28,17 @@ class PassController extends _$PassController {
 
   void change() {
     state = !state;
+  }
+}
+
+@riverpod
+class ImageController extends _$ImageController {
+  @override
+  XFile? build() {
+    return  null;
+  }
+
+  Future<void> pickImage() async {
+    state = await ImagePicker().pickImage(source: ImageSource.gallery);
   }
 }

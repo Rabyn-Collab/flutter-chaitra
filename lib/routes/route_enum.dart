@@ -5,5 +5,6 @@
 enum AppRoute{
   login,
   signup,
-  home
+  home,
+  postAdd
 }

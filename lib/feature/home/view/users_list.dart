@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/user/view/user_controllers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ class UsersList extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(10),
       height: 100,
+
       child: users.when(
           data: (data){
             return ListView.builder(
@@ -19,8 +21,11 @@ class UsersList extends ConsumerWidget {
               itemCount: data.length,
               itemBuilder: (context, index) => Column(
                 children: [
-                  CircleAvatar(),
-                  Text(data[index].firstName!),
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: CachedNetworkImageProvider(data[index].imageUrl!),
+                  ),
+                  Text(data[index].firstName!, style: const TextStyle(fontWeight: FontWeight.w500),),
                 ],
               ),
             );

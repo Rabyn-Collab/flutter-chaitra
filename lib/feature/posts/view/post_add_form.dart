@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/common/show_toasts.dart';
-import 'package:flutter_chaitra/feature/auth/view/controllers/auth_controller.dart';
+import 'package:flutter_chaitra/feature/posts/view/controllers/post_controller.dart';
 import 'package:flutter_chaitra/feature/shared/common_provider.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,23 +10,24 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
-class SignUp extends ConsumerStatefulWidget {
-  const SignUp({super.key});
+class PostAddForm extends ConsumerStatefulWidget {
+  const PostAddForm({super.key});
 
   @override
-  ConsumerState createState() => _SignUpState();
+  ConsumerState createState() => _PostAddFormState();
 }
 
-class _SignUpState extends ConsumerState<SignUp> {
+class _PostAddFormState extends ConsumerState<PostAddForm> {
   final _formKey = GlobalKey<FormBuilderState>();
   @override
   Widget build(BuildContext context) {
-    ref.listen(signUpControllerProvider, (prev, next) {
+    ref.listen(postControllerProvider, (prev, next) {
       next.maybeWhen(
         loading: () => context.loaderOverlay.show(),
         data: (value) {
           context.loaderOverlay.hide();
-          Toasting.showSuccessToast('SignUp Success');
+          Toasting.showSuccessToast('post added success');
+          context.pop();
         },
         error: (err, stackTrace) {
           context.loaderOverlay.hide();
@@ -37,13 +37,12 @@ class _SignUpState extends ConsumerState<SignUp> {
       );
     });
 
-    final mode = ref.watch(validateModeProvider('SignUp'));
-    final passShow = ref.watch(passControllerProvider('SignUp'));
+    final mode = ref.watch(validateModeProvider('post'));
     final image = ref.watch(imageControllerProvider);
     return LoaderOverlay(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('SignUp Page'),
+          title: const Text('Post Add Form'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -55,10 +54,10 @@ class _SignUpState extends ConsumerState<SignUp> {
 
                   Gap(40),
                   FormBuilderTextField(
-                    name: 'username',
+                    name: 'title',
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter your Username',
+                      hintText: 'Enter Title',
                     ),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
@@ -66,33 +65,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                   ),
                   Gap(20),
                   FormBuilderTextField(
-                    name: 'email',
+                    name: 'body',
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Enter your email',
+                      hintText: 'Enter Detail',
                     ),
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(),
-                      FormBuilderValidators.email(),
-                    ]),
-                  ),
-                  Gap(20),
-                  FormBuilderTextField(
-                    name: 'password',
-                    obscureText: passShow,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                        icon: Icon(passShow ? Icons.visibility_off : Icons.visibility),
-                        onPressed: () {
-                          ref.read(passControllerProvider('SignUp').notifier).change();
-                        },
-                      ),
-                    ),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.minLength(5),
                     ]),
                   ),
                   Gap(20),
@@ -119,32 +98,23 @@ class _SignUpState extends ConsumerState<SignUp> {
                         if(image == null){
                           Toasting.showErrorToast('Please select an image');
                         }else{
-                          ref.read(signUpControllerProvider.notifier).signUp(
-                              username: map['username'],
-                              email: map['email'],
-                              password: map['password'],
-                            image: image
+                          ref.read(postControllerProvider.notifier).addPost(
+                             body: map['body'] ,
+                              title: map['title'] ,
+                              image: image
                           );
                         }
 
 
                       }else{
-                        ref.read(validateModeProvider('SignUp').notifier).change();
+                        ref.read(validateModeProvider('post').notifier).change();
                       }
                     },
-                    child: Text('SignUp'),
+                    child: Text('Submit'),
                   ),
                   Gap(20),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Already have an account?'),
-                      TextButton(onPressed: (){
-                        context.pop();
-                      }, child: Text('Login'),)
-                    ],
-                  )
+
 
                 ],
               )
