@@ -1,7 +1,9 @@
 import 'package:flutter_chaitra/feature/auth/view/login.dart';
 import 'package:flutter_chaitra/feature/auth/view/signup.dart';
 import 'package:flutter_chaitra/feature/home/view/home.dart';
+import 'package:flutter_chaitra/feature/posts/model/post.dart';
 import 'package:flutter_chaitra/feature/posts/view/post_add_form.dart';
+import 'package:flutter_chaitra/feature/posts/view/post_update_form.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -35,6 +37,11 @@ GoRouter goRoute(Ref ref) {
           path: '/post-add',
           name: AppRoute.postAdd.name,
           builder: (context, state) => const PostAddForm()
+      ),
+      GoRoute(
+          path: '/post-update',
+          name: AppRoute.postUpdate.name,
+          builder: (context, state) => PostUpdateForm(post: state.extra as Post,)
       ),
       GoRoute(
         path: '/login',

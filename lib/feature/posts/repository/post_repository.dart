@@ -41,6 +41,54 @@ class PostRepository {
 
   }
 
+  Future<void> updatePost({
+    required String title,
+    required String body,
+    XFile? image,
+    required String postId,
+    String? imageId
+  }) async{
+
+    try{
+      if(image == null){
+        await postDb.doc(postId).update({
+          'title': title,
+          'body': body,
+        });
+      }else{
+        final formData = FormData.fromMap({
+          'file': await MultipartFile.fromFile(image.path),
+        });
+        final response =  await client.patch('/api/files/$imageId', data: formData);
+        await postDb.doc(postId).update({
+          'title': title,
+          'body': body,
+          'image': response.data['secure_url'],
+          'imageId': response.data['public_id'],
+        });
+      }
+
+
+    }on FirebaseException catch (err){
+      throw '${err.message}';
+    }
+
+  }
+
+  Future<void> removePost({
+   required String postId,
+    required String imageId,
+  }) async{
+
+    try{
+       await client.delete('/api/files/$imageId');
+      await postDb.doc(postId).delete();
+    }on FirebaseException catch (err){
+      throw '${err.message}';
+    }
+
+  }
+
   Stream<List<Post>> getPosts () {
     return postDb.snapshots().map((event) {
       return event.docs.map((e) {

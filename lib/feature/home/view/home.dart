@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
         children: [
         const UsersList(),
         Gap(10),
-        PostList()
+        const PostList()
       ],
     ),
     );
