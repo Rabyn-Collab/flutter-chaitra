@@ -7,5 +7,8 @@ enum AppRoute{
   signup,
   home,
   postAdd,
-  postUpdate
+  postUpdate,
+  userPage,
+  chat,
+  recentChats
 }

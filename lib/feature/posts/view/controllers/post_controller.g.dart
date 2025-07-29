@@ -56,7 +56,7 @@ final postRemoveControllerProvider =
 
 typedef _$PostRemoveController = AutoDisposeAsyncNotifier<void>;
 String _$postUpdateControllerHash() =>
-    r'485dde08965c41500d1bfdfb250dbed7d81dcb03';
+    r'bc7b07bcb5d279c737f56a19f7395e53ad4df627';
 
 /// See also [PostUpdateController].
 @ProviderFor(PostUpdateController)

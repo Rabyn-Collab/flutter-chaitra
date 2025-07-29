@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/home/view/drawer_widget.dart';
-import 'package:flutter_chaitra/feature/home/view/users_list.dart';
+import 'package:flutter_chaitra/feature/user/view/users_list.dart';
 import 'package:flutter_chaitra/feature/posts/view/post_list.dart';
 import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:gap/gap.dart';

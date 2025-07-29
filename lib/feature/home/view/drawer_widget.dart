@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/auth/view/controllers/auth_controller.dart';
 import 'package:flutter_chaitra/feature/user/view/user_controllers.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 
 
@@ -22,11 +24,23 @@ class DrawerWidget extends ConsumerWidget {
             child: userState.when(data: (data){
               return  Column(
                 children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(data.imageUrl!),
+                  ),
                   Text(data.firstName!),
                   Text(data.metadata!['email']!),
                 ],
               );
             }, error: (error, stackTrace) => Text(error.toString()), loading: () => Center(child: CircularProgressIndicator()),),
+          ),
+
+          ListTile(
+            onTap: (){
+              context.pushNamed(AppRoute.recentChats.name);
+            },
+            title: Text('Recent Chats'),
+            leading: Icon(Icons.chat),
           ),
 
           ListTile(

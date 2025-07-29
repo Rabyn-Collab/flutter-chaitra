@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/user/view/user_controllers.dart';
+import 'package:flutter_chaitra/routes/route_enum.dart';
 import 'package:flutter_chat_types/src/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 
@@ -38,14 +40,19 @@ class UsersList extends ConsumerWidget {
       separatorBuilder: (context, index) => SizedBox(width: 10,),
             scrollDirection: Axis.horizontal ,
             itemCount: data.length,
-            itemBuilder: (context, index) => Column(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: CachedNetworkImageProvider(data[index].imageUrl!),
-                ),
-                Text(data[index].firstName!, style: const TextStyle(fontWeight: FontWeight.w500),),
-              ],
+            itemBuilder: (context, index) => InkWell(
+              onTap: (){
+                context.pushNamed(AppRoute.userPage.name, extra: data[index]);
+              },
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: CachedNetworkImageProvider(data[index].imageUrl!),
+                  ),
+                  Text(data[index].firstName!, style: const TextStyle(fontWeight: FontWeight.w500),),
+                ],
+              ),
             ),
           );
   }
