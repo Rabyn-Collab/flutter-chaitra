@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/feature/chat/%20view/controllers/chat_controller.dart';
+import 'package:flutter_chaitra/feature/notification/repository/notification_repository.dart';
 import 'package:flutter_chaitra/feature/shared/fire_instances.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -17,6 +18,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final msgState = ref.watch(streamMessagesProvider(room:  widget.room));
+    final friend = widget.room.users.firstWhere((user) => user.id != FireInstances.fireChat.firebaseUser!.uid);
     return Scaffold(
       appBar: AppBar(
         title: Text('Chat Page'),
@@ -28,6 +30,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           showUserNames: true,
           onSendPressed: (message){
             FireInstances.fireChat.sendMessage(message, widget.room.id);
+            NotificationRepository.sendNotification(title: friend.firstName!, body: message.text, friendId: friend.id);
           },
           user: types.User(
             id: FireInstances.fireChat.firebaseUser!.uid,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chaitra/routes/app_routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'firebase_options.dart';
-
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 
 
@@ -15,6 +15,8 @@ void main () async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  OneSignal.initialize("71c986a3-108d-4217-a195-81e8daed050a");
+  OneSignal.Notifications.requestPermission(true);
   runApp(ProviderScope(child: const Main()));
 }
 

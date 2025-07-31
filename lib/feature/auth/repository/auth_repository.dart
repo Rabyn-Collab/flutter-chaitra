@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chaitra/feature/shared/fire_instances.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_repository.g.dart';
@@ -15,7 +16,8 @@ class AuthRepository{
   
   Future<void> login({required String email, required String password}) async{
     try{
-      await FireInstances.fireAuth.signInWithEmailAndPassword(email: email, password: password);
+      final credential = await FireInstances.fireAuth.signInWithEmailAndPassword(email: email, password: password);
+      await OneSignal.login(credential.user!.uid);
     }on FirebaseAuthException catch(e){
       throw '${e.message}';
     }
